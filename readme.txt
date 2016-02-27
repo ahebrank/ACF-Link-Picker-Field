@@ -57,6 +57,9 @@ Outputs:
 
 == Changelog ==
 
+= 1.1.2 =
+* Added NL translation support from [vjanssens](https://github.com/vjanssens)
+
 = 1.1.1 =
 * Added PT translation support from [alvarogois](https://github.com/alvarogois)
 * Bumped compatibility information

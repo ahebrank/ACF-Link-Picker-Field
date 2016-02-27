@@ -38,6 +38,7 @@ When outputting the link selection on the front end, you will have three object 
 *	url - The URL of the page
 *	title - The title of the link, if entered
 *	target - Will be either a blank string or '_blank', depending on whether the user has ticked the box for the link to open in a new window/tab.
+* postid - Not available as part of wp_link, this is an ajax hack to attempt to look up the post ID of a selected link. This will return 0 if the post ID was not found.
 
 Code example:
 
@@ -53,9 +54,14 @@ Outputs:
   string(10) "Link Title"
   ["target"]=>
   string(6) "_blank"
+  ["postid"]=>
+  int 2231
 }`
 
 == Changelog ==
+
+= 1.2.1 =
+* Attempt to add a post ID ($link["postid"]) to the field data
 
 = 1.2 =
 * Automatically update the link title when clicking on a link.  This functionality differs from the WYSIWYG link picker (which assumes highlighted text) but should be consistent with expected behavior of an ACF field.

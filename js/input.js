@@ -15,6 +15,22 @@
         }
         event.stopPropagation();
     }
+
+    function update_hidden_postid(url) {
+        // lookup the post_id by url, set value on a hidden field
+        var ajax_data = {
+            'action': 'link_picker_postid_lookup',
+            'url': url
+        };
+        $.post(ajaxurl, ajax_data, function(response) {
+            var $hidden_postid = $('#link-options input[name="postid"]');
+            if ($hidden_postid.length === 0) {
+                $hidden_postid = $('<input type="hidden" name="postid">');
+                $('#link-options').append($hidden_postid);
+            }
+            $hidden_postid.val(response);
+        });
+    }
   
     function initialize_field( $el ) {
 
@@ -41,6 +57,9 @@
 
                     // target a blank page?
                     $('#wp-link-target').prop('checked', (current_target === '_blank'));
+
+                    // try to figure out the post ID
+                    update_hidden_postid(current_url);
                 };
                 wpLink.open(thisID); // open the link popup
             }
@@ -105,6 +124,17 @@
                 $('#' + doingLink + '-url').val(linkAtts.href);
                 $('#' + doingLink + '-title').val(linkAtts.title);
                 $('#' + doingLink + '-target').val(linkAtts.target);
+
+                // try to add in a post ID
+                var $hidden_postid = $('#link-options input[name="postid"]');
+                if ($hidden_postid.length > 0)
+                {
+                    $('#' + doingLink + '-postid').val($hidden_postid.val());
+                    $('#' + doingLink + '-postid-label').html($hidden_postid.val());
+                }
+                else {
+                    $('#' + doingLink + '-postid-label').html('0');
+                }
                 
                 $('#' + doingLink + '-url-label').html('<a href="' + linkAtts.href + '" target="_blank">' + linkAtts.href + '</a>');
                 $('#' + doingLink + '-title-label').html(linkAtts.title);
@@ -155,6 +185,8 @@
         {
             if (doingLink !== '')
             {
+                update_hidden_postid($(this).find('input.item-permalink').val());
+
                 $('#wp-link-text').val($(this).find('.item-title').text());
             }
         });

@@ -36,13 +36,11 @@
                 // initialize with current URL and title
                 wpLink.setDefaultValues = function () { 
                     // set the current title and URL
-                    var $text_inputs = $('#wp-link').find('input[type=text]');
-                    $($text_inputs[1]).val(current_title);
-                    $($text_inputs[0]).val(current_url);
+                    $('#wp-link-text').val(current_title);
+                    $('#wp-link-url').val(current_url);
 
                     // target a blank page?
-                    var $checkbox_inputs = $('#wp-link').find('input[type=checkbox]');
-                    $checkbox_inputs.first().prop('checked', (current_target === '_blank'));
+                    $('#wp-link-target').prop('checked', (current_target === '_blank'));
                 };
                 wpLink.open(thisID); // open the link popup
             }
@@ -149,6 +147,15 @@
                 trap_events(event);
                 reset_wplink();
                 return false;
+            }
+        });
+
+        // put the link title in the title box
+        $('body').on('click', '#search-panel .query-results li', function(event)
+        {
+            if (doingLink !== '')
+            {
+                $('#wp-link-text').val($(this).find('.item-title').text());
             }
         });
     }

@@ -57,6 +57,9 @@ Outputs:
 
 == Changelog ==
 
+= 1.2 =
+* Automatically update the link title when clicking on a link.  This functionality differs from the WYSIWYG link picker (which assumes highlighted text) but should be consistent with expected behavior of an ACF field.
+
 = 1.1.2 =
 * Added NL translation support from [vjanssens](https://github.com/vjanssens)
 

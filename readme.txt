@@ -61,7 +61,7 @@ Outputs:
 == Changelog ==
 
 = 1.2.2 =
-* New handlers for the updated link picker with WP 4.5.  Be aware that the underlying widget is now passing absolute URL permalinks.
+* New handlers for the updated link picker with WP 4.5.
 
 = 1.2.1 =
 * Attempt to add a post ID ($link["postid"]) to the field data

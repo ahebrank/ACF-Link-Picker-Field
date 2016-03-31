@@ -3,7 +3,7 @@
 Contributors: BIOSTALL, caalami
 Tags: acf, advanced custom fields, link picker, link chooser, acf link picker
 Requires at least: 3.5
-Tested up to: 4.4.1
+Tested up to: 4.5
 Stable tag: trunk
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
@@ -59,6 +59,9 @@ Outputs:
 }`
 
 == Changelog ==
+
+= 1.2.2 =
+* New handlers for the updated link picker with WP 4.5.  Be aware that the underlying widget is now passing absolute URL permalinks.
 
 = 1.2.1 =
 * Attempt to add a post ID ($link["postid"]) to the field data

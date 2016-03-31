@@ -16,18 +16,31 @@
         event.stopPropagation();
     }
 
+    // create the field if it's not there
+    function check_create_post_id() {
+        var $hidden_postid = $('#link-options input[name="postid"]');
+        if ($hidden_postid.length === 0) {
+            $hidden_postid = $('<input type="hidden" name="postid">');
+            $('#link-options').append($hidden_postid);
+        }
+        return $hidden_postid;
+    }
+
+    // reset post ID to 0
+    function reset_post_id() {
+        var $hidden_postid = check_create_post_id();
+        $hidden_postid.val('0');
+    }
+
     function update_hidden_postid(url) {
+        var $hidden_postid = check_create_post_id();
+
         // lookup the post_id by url, set value on a hidden field
         var ajax_data = {
             'action': 'link_picker_postid_lookup',
             'url': url
         };
         $.post(ajaxurl, ajax_data, function(response) {
-            var $hidden_postid = $('#link-options input[name="postid"]');
-            if ($hidden_postid.length === 0) {
-                $hidden_postid = $('<input type="hidden" name="postid">');
-                $('#link-options').append($hidden_postid);
-            }
             $hidden_postid.val(response);
         });
     }
@@ -117,6 +130,7 @@
             {
                 var linkAtts = wpLink.getAttrs(); // the links attributes (href, target) are stored in an object, which can be access via  wpLink.getAttrs()
                 // title is no longer included (as of 4.2)
+
                 if (!('title' in linkAtts)) {
                     linkAtts.title = $("#wp-link-text").val();
                 }
@@ -169,6 +183,36 @@
         });
 
 
+        // new for wp 4.5 -- detect the jquery ui autocomplete selection event
+        // and use it to update the post ID and title
+        $('body').on('autocompleteselect', '#wp-link-url', function(event, ui) 
+        {
+            if (doingLink !== '') {
+                // clear any existing post ID
+                reset_post_id();
+                // clear the link text to make room for a new title
+                $('#wp-link-text').val('');
+                // try to figure out the post ID -- delay until the picker has updated the field
+                setTimeout(function() {
+                    update_hidden_postid($('#wp-link-url').val());
+                }, 100);
+            }
+        });
+
+        // put the link title in the title box -- this function is non-functional as of
+        // wp 4.5 since the search button has gone away
+        $('body').on('click', '#search-panel .query-results li', function(event)
+        {
+            if (doingLink !== '')
+            {
+                // clear any existing post ID
+                reset_post_id();
+                $('#wp-link-text').val($(this).find('.item-title').text());
+                update_hidden_postid($(this).find('input.item-permalink').val());
+            }
+        });
+
+        // close the dialog
         $('body').on('click', '#wp-link-close, #wp-link-cancel a', function(event) 
         {
             // ignore this handler if we're not running a link-picker
@@ -180,16 +224,7 @@
             }
         });
 
-        // put the link title in the title box
-        $('body').on('click', '#search-panel .query-results li', function(event)
-        {
-            if (doingLink !== '')
-            {
-                update_hidden_postid($(this).find('input.item-permalink').val());
 
-                $('#wp-link-text').val($(this).find('.item-title').text());
-            }
-        });
     }
   
     if( typeof acf.add_action !== 'undefined' ) {

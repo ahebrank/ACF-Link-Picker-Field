@@ -205,8 +205,6 @@
         {
             if (doingLink !== '')
             {
-                // clear any existing post ID
-                reset_post_id();
                 $('#wp-link-text').val($(this).find('.item-title').text());
                 update_hidden_postid($(this).find('input.item-permalink').val());
             }

@@ -60,6 +60,9 @@ Outputs:
 
 == Changelog ==
 
+= 1.2.3 =
+* Make the link class a little more distinctive -- thanks, [dmarkowicz](https://github.com/dmarkowicz)
+
 = 1.2.2 =
 * New handlers for the updated link picker with WP 4.5.
 

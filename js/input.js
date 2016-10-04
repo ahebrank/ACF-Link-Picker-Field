@@ -47,7 +47,7 @@
   
     function initialize_field( $el ) {
 
-        $el.on('click', '.link-btn', function(event) 
+        $el.on('click', '.acf-lp-link-btn', function(event)
         {
             trap_events(event);
 
@@ -80,7 +80,7 @@
             return false;
         });
 
-        $el.on('click', '.link-remove-btn', function(event) 
+        $el.on('click', '.acf-lp-link-remove-btn', function(event)
         {
             var thisID = $(this).attr("id").replace("-remove", "");
             doingLink = thisID;

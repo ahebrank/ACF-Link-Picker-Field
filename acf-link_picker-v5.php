@@ -182,10 +182,10 @@ class acf_field_link_picker extends acf_field {
                 </div>
             </div>
             <p>
-                <a href="" class="link-btn acf-button grey" id="link-picker-<?php echo $field['id']; ?>">
+                <a href="" class="acf-lp-link-btn acf-button grey" id="link-picker-<?php echo $field['id']; ?>">
                 	<?php if (!$exists) { _e('Insert Link', 'acf-link_picker'); }else{ _e('Edit Link', 'acf-link_picker'); } ?>
                 </a>
-                <a href="" class="link-remove-btn acf-button grey" id="link-picker-<?php echo $field['id']; ?>-remove"<?php if (!$exists) { echo ' style="display:none;"'; } ?>>
+                <a href="" class="acf-lp-link-remove-btn acf-button grey" id="link-picker-<?php echo $field['id']; ?>-remove"<?php if (!$exists) { echo ' style="display:none;"'; } ?>>
                 	<?php _e('Remove Link', 'acf-link_picker'); ?>
                 </a>
             </p>

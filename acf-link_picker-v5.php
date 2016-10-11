@@ -44,7 +44,12 @@ class acf_field_link_picker extends acf_field {
 		*/
 		
 		$this->defaults = array(
-			//'font_size'	=> 14,
+			'value' => array(
+				'url' => '',
+				'title' => '',
+				'target' => '',
+				'postid' => 0,
+			),
 		);
 		
 		
@@ -134,6 +139,7 @@ class acf_field_link_picker extends acf_field {
 		$exists = true;
         if ( !$field['value'] || $field['value'] === FALSE || (isset($field['value']['url']) && $field['value']['url'] == '') )
         {
+        	$field['value'] = $this->defaults['value'];
             $exists = false;
         }
 		

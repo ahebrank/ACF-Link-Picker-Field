@@ -1,0 +1,46 @@
+msgid ""
+msgstr ""
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Project-Id-Version: ACF Link Picker\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Jonatan Jall Jahja <jonatan@addcode.se>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: sv_SE\n"
+"X-Generator: Poedit 1.7\n"
+
+msgid "Currently selected page"
+msgstr "Vald sida"
+
+msgid "URL"
+msgstr "URL"
+
+msgid "Title"
+msgstr "Titel"
+
+msgid "Open in new window"
+msgstr "Öppna i nytt fönster"
+
+msgid "Open link in a new window/tab"
+msgstr "Öppna i nytt fönster/flik"
+
+msgid "Yes"
+msgstr "Ja"
+
+msgid "No"
+msgstr "Nej"
+
+msgid "No link selected yet"
+msgstr "Ingen länk vald"
+
+msgid "Edit Link"
+msgstr "Redigera Länk"
+
+msgid "Insert Link"
+msgstr "Lägg till Länk"
+
+msgid "Remove Link"
+msgstr "Ta bort Länk"

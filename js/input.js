@@ -47,11 +47,18 @@
   
     function initialize_field( $el ) {
 
-        $el.on('click', '.acf-lp-link-btn', function(event)
+        $el.on('click', '.acf-lp-link-btn, .acf-label label', function(event)
         {
             trap_events(event);
 
-            var thisID = $(this).attr("id");
+            var thisID;
+
+            if($(this).is('label')){
+                thisID = 'link-picker-' + $(this).attr('for');
+            }else{
+                thisID = $(this).attr("id");
+            }
+            
             doingLink = thisID;
 
             if (typeof wpLink !== 'undefined') {

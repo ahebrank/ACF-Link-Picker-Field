@@ -60,6 +60,9 @@ Outputs:
 
 == Changelog ==
 
+= 1.2.6 =
+* Bugfix: revert setting empty values
+
 = 1.2.5 =
 * Multiple fixes from [Jontis00](https://github.com/Jontis00), including:
   * Set a default (empty) value for the field

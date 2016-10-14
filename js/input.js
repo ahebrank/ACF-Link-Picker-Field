@@ -40,8 +40,19 @@
             'action': 'link_picker_postid_lookup',
             'url': url
         };
+
+        var didLink = doingLink;
         $.post(ajaxurl, ajax_data, function(response) {
-            $hidden_postid.val(response);
+            // we are still doing the same link
+            if(didLink == doingLink){
+                $hidden_postid.val(response);
+            }
+
+            // the link was selected before the ajax call finished
+            if($('#' + didLink + '-url').val() == url){
+                $('#' + didLink + '-postid').val(response);
+                $('#' + didLink + '-postid-label').html(response);
+            }
         });
     }
   

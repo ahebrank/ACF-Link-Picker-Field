@@ -47,10 +47,11 @@ add_action('acf/register_fields', 'register_fields_link_picker');
 function lookup_postid_link_picker() {
   global $wpdb;
 
+  $field_id = $_POST['field_id'];
   $url = esc_url($_POST['url']);
   $postid = url_to_postid($url);
 
-  print intval($postid);
+  print json_encode(array('field_id' => $field_id, 'post_id' => intval($postid)));
 
   wp_die(); 
 }

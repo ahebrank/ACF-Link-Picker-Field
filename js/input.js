@@ -16,44 +16,22 @@
         event.stopPropagation();
     }
 
-    // create the field if it's not there
-    function check_create_post_id() {
-        var $hidden_postid = $('#link-options input[name="postid"]');
-        if ($hidden_postid.length === 0) {
-            $hidden_postid = $('<input type="hidden" name="postid">');
-            $('#link-options').append($hidden_postid);
-        }
-        return $hidden_postid;
-    }
-
-    // reset post ID to 0
-    function reset_post_id() {
-        var $hidden_postid = check_create_post_id();
-        $hidden_postid.val('0');
-    }
-
-    function update_hidden_postid(url) {
-        var $hidden_postid = check_create_post_id();
+    function get_postid(url) {
 
         // lookup the post_id by url, set value on a hidden field
         var ajax_data = {
             'action': 'link_picker_postid_lookup',
-            'url': url
+            'url': url,
+            'field_id': doingLink
         };
 
-        var didLink = doingLink;
         $.post(ajaxurl, ajax_data, function(response) {
-            // we are still doing the same link
-            if(didLink == doingLink){
-                $hidden_postid.val(response);
-            }
+            var post_id = response.post_id;
+            var id = response.field_id;
 
-            // the link was selected before the ajax call finished
-            if($('#' + didLink + '-url').val() == url){
-                $('#' + didLink + '-postid').val(response);
-                $('#' + didLink + '-postid-label').html(response);
-            }
-        });
+            $('#' + id + '-postid').val(post_id);
+            $('#' + id + '-postid-label').html(post_id);
+        }, 'json');
     }
   
     function initialize_field( $el ) {
@@ -90,7 +68,7 @@
                     $('#wp-link-target').prop('checked', (current_target === '_blank'));
 
                     // try to figure out the post ID
-                    update_hidden_postid(current_url);
+                    get_postid(current_url);
                 };
                 wpLink.open(thisID); // open the link popup
             }
@@ -129,6 +107,17 @@
             bind_wplink_handlers();
             modal_bound = true;
         }
+
+        // try to set the post ID if it's not there
+        var url = $el.find('input[name$="[url]"]').val();
+        if (url) {
+            var $postid_input = $el.find('input[name$="[postid]"]');
+            var post_id = $postid_input.val();
+            if (!post_id || post_id == 0) {
+                doingLink = $postid_input.attr('id').replace('-postid', '');
+                get_postid(url);
+            }
+        }
     }
 
     function reset_wplink() {
@@ -157,16 +146,6 @@
                 $('#' + doingLink + '-title').val(linkAtts.title);
                 $('#' + doingLink + '-target').val(linkAtts.target);
 
-                // try to add in a post ID
-                var $hidden_postid = $('#link-options input[name="postid"]');
-                if ($hidden_postid.length > 0)
-                {
-                    $('#' + doingLink + '-postid').val($hidden_postid.val());
-                    $('#' + doingLink + '-postid-label').html($hidden_postid.val());
-                }
-                else {
-                    $('#' + doingLink + '-postid-label').html('0');
-                }
                 
                 $('#' + doingLink + '-url-label').html('<a href="' + linkAtts.href + '" target="_blank">' + linkAtts.href + '</a>');
                 $('#' + doingLink + '-title-label').html(linkAtts.title);
@@ -200,23 +179,6 @@
             }
         });
 
-
-        // new for wp 4.5 -- detect the jquery ui autocomplete selection event
-        // and use it to update the post ID and title
-        $('body').on('autocompleteselect', '#wp-link-url', function(event, ui) 
-        {
-            if (doingLink !== '') {
-                // clear any existing post ID
-                reset_post_id();
-                // clear the link text to make room for a new title
-                $('#wp-link-text').val('');
-                // try to figure out the post ID -- delay until the picker has updated the field
-                setTimeout(function() {
-                    update_hidden_postid($('#wp-link-url').val());
-                }, 100);
-            }
-        });
-
         // put the link title in the title box -- this function is non-functional as of
         // wp 4.5 since the search button has gone away
         $('body').on('click', '#search-panel .query-results li', function(event)
@@ -224,7 +186,7 @@
             if (doingLink !== '')
             {
                 $('#wp-link-text').val($(this).find('.item-title').text());
-                update_hidden_postid($(this).find('input.item-permalink').val());
+                get_postid($(this).find('input.item-permalink').val());
             }
         });
 

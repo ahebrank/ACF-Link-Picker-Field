@@ -16,13 +16,13 @@
         event.stopPropagation();
     }
 
-    function get_postid(url) {
+    function get_postid(url, field_id) {
 
         // lookup the post_id by url, set value on a hidden field
         var ajax_data = {
             'action': 'link_picker_postid_lookup',
             'url': url,
-            'field_id': doingLink
+            'field_id': field_id
         };
 
         $.post(ajaxurl, ajax_data, function(response) {
@@ -67,8 +67,8 @@
                     // target a blank page?
                     $('#wp-link-target').prop('checked', (current_target === '_blank'));
 
-                    // try to figure out the post ID
-                    get_postid(current_url);
+                    // reset the search
+                    $('#wp-link-search').val('');
                 };
                 wpLink.open(thisID); // open the link popup
             }
@@ -84,6 +84,7 @@
             $('#' + doingLink + '-url').val('');
             $('#' + doingLink + '-title').val('');
             $('#' + doingLink + '-target').val('');
+            $('#' + doingLink + '-postid').val('');
             
             $('#' + doingLink + '-none').show();
             $('#' + doingLink + '-exists').hide();
@@ -114,8 +115,7 @@
             var $postid_input = $el.find('input[name$="[postid]"]');
             var post_id = $postid_input.val();
             if (!post_id || post_id == 0) {
-                doingLink = $postid_input.attr('id').replace('-postid', '');
-                get_postid(url);
+                get_postid(url, $postid_input.attr('id').replace('-postid', ''));
             }
         }
     }
@@ -141,7 +141,7 @@
                 if (!('title' in linkAtts)) {
                     linkAtts.title = $("#wp-link-text").val();
                 }
-                
+
                 $('#' + doingLink + '-url').val(linkAtts.href);
                 $('#' + doingLink + '-title').val(linkAtts.title);
                 $('#' + doingLink + '-target').val(linkAtts.target);
@@ -186,7 +186,7 @@
             if (doingLink !== '')
             {
                 $('#wp-link-text').val($(this).find('.item-title').text());
-                get_postid($(this).find('input.item-permalink').val());
+                get_postid($(this).find('input.item-permalink').val(), doingLink);
             }
         });
 

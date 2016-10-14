@@ -43,14 +43,14 @@ class acf_field_link_picker extends acf_field {
 		*  defaults (array) Array of default settings which are merged into the field object. These are used later in settings
 		*/
 		
-		$this->defaults = array(
-			'value' => array(
-				'url' => '',
-				'title' => '',
-				'target' => '',
-				'postid' => 0,
-			),
-		);
+		// $this->defaults = array(
+		// 	'value' => array(
+		// 		'url' => '',
+		// 		'title' => '',
+		// 		'target' => '',
+		// 		'postid' => 0,
+		// 	),
+		// );
 		
 		
 		/*
@@ -132,14 +132,13 @@ class acf_field_link_picker extends acf_field {
 		*  This will show what data is available
 		*/
 		
-		/*echo '<pre>';
-			print_r( $field );
-		echo '</pre>';*/
+		// echo '<pre>';
+		// 	print_r( $field );
+		// echo '</pre>';
 		
 		$exists = true;
         if ( !$field['value'] || $field['value'] === FALSE || (isset($field['value']['url']) && $field['value']['url'] == '') )
         {
-        	$field['value'] = $this->defaults['value'];
             $exists = false;
         }
 		

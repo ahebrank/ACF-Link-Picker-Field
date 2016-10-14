@@ -60,6 +60,12 @@ Outputs:
 
 == Changelog ==
 
+= 1.2.5 =
+* Multiple fixes from [Jontis00](https://github.com/Jontis00), including:
+  * Set a default (empty) value for the field
+  * Refactor the post ID lookup
+  * Add sv_SE translations
+
 = 1.2.3 =
 * Make the link class a little more distinctive -- thanks, [dmarkowicz](https://github.com/dmarkowicz)
 
@@ -73,11 +79,11 @@ Outputs:
 * Automatically update the link title when clicking on a link.  This functionality differs from the WYSIWYG link picker (which assumes highlighted text) but should be consistent with expected behavior of an ACF field.
 
 = 1.1.2 =
-* Added NL translation support from [vjanssens](https://github.com/vjanssens)
+* Add NL translation support from [vjanssens](https://github.com/vjanssens)
 
 = 1.1.1 =
-* Added PT translation support from [alvarogois](https://github.com/alvarogois)
-* Bumped compatibility information
+* Add PT translation support from [alvarogois](https://github.com/alvarogois)
+* Bump compatibility information
 
 = 1.1 =
 * Bump version, preserve _blank target if set from [philmprice](https://github.com/philmprice)

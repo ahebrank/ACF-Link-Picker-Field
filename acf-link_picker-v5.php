@@ -126,7 +126,12 @@ class acf_field_link_picker extends acf_field {
 	
 	function render_field( $field ) {
 
-		acf_enqueue_uploader();
+		// add wysiwyg assets to page
+		// Per https://www.advancedcustomfields.com/resources/acf_form/: "This will create a 
+		// hidden WYSIWYG field and enqueue the required JS templates for the WP media popups."
+		if (function_exists('acf_enqueue_uploader')) {
+			acf_enqueue_uploader();
+		}
 
 		/*
 		*  Review the data of $field.

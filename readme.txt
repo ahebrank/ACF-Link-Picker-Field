@@ -60,6 +60,9 @@ Outputs:
 
 == Changelog ==
 
+= 1.2.7 =
+* Enqueue wysiwyg assets if needed (thanks, [dmarkowicz](https://github.com/dmarkowicz))
+
 = 1.2.6 =
 * Bugfix: revert setting empty values
 

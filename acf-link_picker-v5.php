@@ -125,8 +125,9 @@ class acf_field_link_picker extends acf_field {
 	*/
 	
 	function render_field( $field ) {
-		
-		
+
+		acf_enqueue_uploader();
+
 		/*
 		*  Review the data of $field.
 		*  This will show what data is available

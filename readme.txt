@@ -25,6 +25,8 @@ This ACF field type is compatible with:
 *	ACF 5
 *	ACF 4
 
+*ACF 4 support is deprecated, and new plugin features will generally not work with ACF 4.*
+
 == Installation ==
 
 1. Copy the `acf-link_picker` folder into your `wp-content/plugins` folder
@@ -59,6 +61,9 @@ Outputs:
 }`
 
 == Changelog ==
+
+= 1.2.8 =
+* Some additional compatibility checks for ACF 4 (disable post ID lookups to suppress JS errors)
 
 = 1.2.7 =
 * Enqueue wysiwyg assets if needed (thanks, [dmarkowicz](https://github.com/dmarkowicz))

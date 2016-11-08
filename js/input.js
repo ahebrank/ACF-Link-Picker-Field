@@ -18,6 +18,11 @@
 
     function get_postid(url, field_id) {
 
+        // make sure we're ACF 5 and support post ID lookup
+        if (!$('#' + field_id + '-postid').length) {
+            return;
+        }
+
         // lookup the post_id by url, set value on a hidden field
         var ajax_data = {
             'action': 'link_picker_postid_lookup',
@@ -29,8 +34,10 @@
             var post_id = response.post_id;
             var id = response.field_id;
 
-            $('#' + id + '-postid').val(post_id);
-            $('#' + id + '-postid-label').html(post_id);
+            if ($('#' + id + '-postid').length && $('#' + id + '-postid-label').length) {
+                $('#' + id + '-postid').val(post_id);
+                $('#' + id + '-postid-label').html(post_id);
+            }
         }, 'json');
     }
   
@@ -84,7 +91,10 @@
             $('#' + doingLink + '-url').val('');
             $('#' + doingLink + '-title').val('');
             $('#' + doingLink + '-target').val('');
-            $('#' + doingLink + '-postid').val('');
+
+            if ($('#' + doingLink + '-postid').length) {
+                $('#' + doingLink + '-postid').val('');
+            }
             
             $('#' + doingLink + '-none').show();
             $('#' + doingLink + '-exists').hide();
@@ -113,9 +123,12 @@
         var url = $el.find('input[name$="[url]"]').val();
         if (url) {
             var $postid_input = $el.find('input[name$="[postid]"]');
-            var post_id = $postid_input.val();
-            if (!post_id || post_id == 0) {
-                get_postid(url, $postid_input.attr('id').replace('-postid', ''));
+            // check input exists
+            if ($postid_input.length) {
+                var post_id = $postid_input.val();
+                if (!post_id || post_id == 0) {
+                    get_postid(url, $postid_input.attr('id').replace('-postid', ''));
+                }
             }
         }
     }
